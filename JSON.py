@@ -1,26 +1,31 @@
 import json
-import bus
-import airplane
-import train
-import car
+import classes
 
-def save_to_json(data, filename):
-    with open(filename, "w") as f:
-        json.dump(data, f, indent=4)
+def save_to_json(vehicle, filename="ddd.json"):
+    """Функция для сохранения данных в JSON-формате."""
+    try:
+        data = {"brand": vehicle.brand, "capacity": vehicle.capacity}
+        if isinstance(vehicle, classes.Car):
+            data["wheels"] = vehicle.wheels
+        elif isinstance(vehicle, classes.Bus):
+            data["doors"] = vehicle.doors
+        elif isinstance(vehicle, classes.Airplane):
+            data["wings"] = vehicle.wings
+        elif isinstance(vehicle, classes.Ship):
+            data["color"] = vehicle.color
+        elif isinstance(vehicle, classes.Train):
+            data["carriages"] = vehicle.carriages
+        elif isinstance(vehicle, classes.Bicycle) or isinstance(vehicle, classes.Motorcycle):
+            data["wheels"] = vehicle.wheels
+        elif isinstance(vehicle, classes.Helicopter):
+            data["rotors"] = vehicle.rotors
+        elif isinstance(vehicle, classes.Rocket):
+            data["engines"] = vehicle.engines
+        elif isinstance(vehicle, classes.Scooter):
+            data["engines"] = vehicle.wheels
 
-def load_from_json(filename):
-    with open(filename, "r") as f:
-        return json.load(f)
-
-def create_transport_from_json(data):
-    transport_type = data["type"]
-    if transport_type == "bus":
-        return bus.Bus(data["brand"], data["model"], data["capacity"], data["number_of_seats"])
-    elif transport_type == "airplane":
-        return airplane.Airplane(data["brand"], data["model"], data["capacity"], data["number_of_seats"])
-    elif transport_type == "train":
-        return train.Train(data["brand"], data["model"], data["capacity"], data["number_of_seats"])
-    elif transport_type == "car":
-        return car.Car(data["brand"], data["model"], data["capacity"], data["number_of_seats"])
-    else:
-        raise ValueError("Неизвестный тип транспорта.")
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+        print(f"Данные сохранены в файл {filename}")
+    except Exception as e:
+        print(f"Ошибка при сохранении в JSON: {e}")

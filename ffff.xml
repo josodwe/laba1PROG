@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <vehicle>
-    <brand>eee</brand>
-    <capacity>34</capacity>
-    <doors>3</doors>
+    <brand>ggg</brand>
+    <capacity>4</capacity>
+    <wheels>4</wheels>
 </vehicle>

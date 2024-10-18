@@ -5,6 +5,7 @@ import xml.dom.minidom as minidom
 
 def add_vehicle():
     """Функция для добавления транспортного средства."""
+    """Обработка исключений"""
     try:
         print("\nВыберите тип транспортного средства:")
         print("1. Автомобиль")
@@ -126,13 +127,111 @@ def save_to_xml(vehicle, filename="ffff.xml"):
     except Exception as e:
         print(f"Ошибка при сохранении в XML: {e}")
 
+
+def read_from_json(filename="ddd.json"):
+    """Функция для чтения данных из JSON файла."""
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        brand = data["brand"]
+        capacity = int(data["capacity"])
+
+        vehicle_type = input(
+            "Введите тип транспортного средства (автомобиль, автобус, самолет, корабль, поезд, велосипед, мотоцикл, вертолет, ракета, самокат): ")
+
+        if vehicle_type == "автомобиль":
+            return classes.Car(brand, capacity)
+        elif vehicle_type == "автобус":
+            return classes.Bus(brand, capacity)
+        elif vehicle_type == "самолет":
+            return classes.Airplane(brand, capacity)
+        elif vehicle_type == "корабль":
+            color = input("Введите окрас: ")
+            return classes.Ship(brand, capacity, color)
+        elif vehicle_type == "поезд":
+            return classes.Train(brand, capacity)
+        elif vehicle_type == "велосипед":
+            return classes.Bicycle(brand, capacity)
+        elif vehicle_type == "мотоцикл":
+            return classes.Motorcycle(brand, capacity)
+        elif vehicle_type == "вертолет":
+            return classes.Helicopter(brand, capacity)
+        elif vehicle_type == "ракета":
+            return classes.Rocket(brand, capacity)
+        elif vehicle_type == "самокат":
+            return classes.Scooter(brand, capacity)
+        else:
+            raise ValueError("Неверный тип транспортного средства.")
+    except KeyError as e:
+        print(f"Отсутствует ключ '{e}' в JSON файле.")
+        return None
+    except Exception as e:
+        print(f"Неизвестная ошибка при чтении из JSON: {e}")
+        return None
+
+
+def read_from_xml(filename="ffff.xml"):
+    """Функция для чтения данных из XML файла."""
+    try:
+        tree = ET.parse(filename)
+        root = tree.getroot()
+
+        brand = root.find("brand").text
+        capacity = int(root.find("capacity").text)
+
+        vehicle_type = input(
+            "Введите тип транспортного средства (автомобиль, автобус, самолет, корабль, поезд, велосипед, мотоцикл, вертолет, ракета, самокат): ")
+
+        if vehicle_type == "автомобиль":
+            wheels = int(root.find("wheels").text)
+            return classes.Car(brand, capacity, wheels=wheels)
+        elif vehicle_type == "автобус":
+            doors = int(root.find("doors").text)
+            return classes.Bus(brand, capacity, doors=doors)
+        elif vehicle_type == "самолет":
+            wings = int(root.find("wings").text)
+            return classes.Airplane(brand, capacity, wings=wings)
+        elif vehicle_type == "корабль":
+            color = root.find("color").text
+            return classes.Ship(brand, capacity, color=color)
+        elif vehicle_type == "поезд":
+            carriages = int(root.find("carriages").text)
+            return classes.Train(brand, capacity, carriages=carriages)
+        elif vehicle_type == "велосипед":
+            wheels = int(root.find("wheels").text)
+            return classes.Bicycle(brand, capacity, wheels=wheels)
+        elif vehicle_type == "мотоцикл":
+            wheels = int(root.find("wheels").text)
+            return classes.Motorcycle(brand, capacity, wheels=wheels)
+        elif vehicle_type == "вертолет":
+            rotors = int(root.find("rotors").text)
+            return classes.Helicopter(brand, capacity, rotors=rotors)
+        elif vehicle_type == "ракета":
+            engines = int(root.find("engines").text)
+            return classes.Rocket(brand, capacity, engines=engines)
+        elif vehicle_type == "самокат":
+            wheels = int(root.find("wheels").text)
+            return classes.Scooter(brand, capacity, wheels=wheels)
+        else:
+            raise ValueError("Неверный тип транспортного средства.")
+    except FileNotFoundError:
+        print("XML файл не найден.")
+        return None
+    except Exception as e:
+        print(f"Неизвестная ошибка при чтении из XML: {e}")
+        return None
+
+
 if __name__ == "__main__":
     while True:
         print("\nВыберите действие:")
         print("1. Добавить транспортное средство")
         print("2. Сохранить в XML")
         print("3. Сохранить в JSON")
-        print("4. Выход")
+        print("4. Читать из XML")
+        print("5. Читать из JSON")
+        print("6. Выход")
         choice = input("Введите номер действия: ")
 
         if choice == "1":
@@ -148,6 +247,22 @@ if __name__ == "__main__":
             else:
                 print("Сначала добавьте транспортное средство.")
         elif choice == "4":
+            if vehicle:
+                read_vehicle = read_from_xml()
+                if read_vehicle:
+                    print(f"Читано транспортное средство: {read_vehicle.get_info()}")
+                else:
+                    print("Не удалось прочитать транспортное средство из XML.")
+            else:
+                print("Сначала добавьте транспортное средство.")
+        elif choice == "5":
+            if vehicle:
+                read_vehicle = read_from_json()
+                if read_vehicle:
+                    print(f"Читано транспортное средство: {read_vehicle.get_info()}")
+                else:
+                    print("Не удалось прочитать транспортное средство из JSON.")
+        elif choice == "6":
             break
         else:
             print("Неверный выбор.")

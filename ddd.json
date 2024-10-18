@@ -1,5 +1,17 @@
-{
-    "brand": "\u043a\u043a\u043a",
-    "capacity": 5,
-    "rotors": 2
-}
+[
+    {
+        "brand": "vsdfvdsv",
+        "capacity": 33,
+        "wheels": 4
+    },
+    {
+        "brand": "eeee",
+        "capacity": 33,
+        "doors": 3
+    },
+    {
+        "brand": "refgref",
+        "capacity": 44,
+        "wings": 2
+    }
+]

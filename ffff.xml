@@ -1,6 +1,18 @@
 <?xml version="1.0" ?>
-<vehicle>
-    <brand>ggg</brand>
-    <capacity>4</capacity>
-    <wheels>4</wheels>
-</vehicle>
+<vehicles>
+    <vehicle>
+        <brand>vsdfvdsv</brand>
+        <capacity>33</capacity>
+        <wheels>4</wheels>
+    </vehicle>
+    <vehicle>
+        <brand>eeee</brand>
+        <capacity>33</capacity>
+        <doors>3</doors>
+    </vehicle>
+    <vehicle>
+        <brand>refgref</brand>
+        <capacity>44</capacity>
+        <wings>2</wings>
+    </vehicle>
+</vehicles>
